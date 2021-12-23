@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.College;
+import com.example.demo.request.CollegeRq;
 import com.example.demo.response.BusinessMessage;
 import com.example.demo.response.Response;
 import com.example.demo.response.StatusEnum;
@@ -29,6 +30,7 @@ public class Controller {
 	
 	Response res=null;
 	List<BusinessMessage> bm=null;
+	HttpStatus httpstatus=null;
 	
 	@GetMapping("/")
 	public ResponseEntity<String> healthCheck()
@@ -49,7 +51,7 @@ public class Controller {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<Response> addCollege(@RequestBody College college)
+	public ResponseEntity<Response> addCollege(@RequestBody CollegeRq college)
 	{
 		res=new Response();
 		bm=new ArrayList<BusinessMessage>();
@@ -58,18 +60,20 @@ public class Controller {
 			bm.add(new BusinessMessage("Successfully posted to DB"));
 			res.setBusinessMessage(bm);
 			res.setStatus(StatusEnum.SUCCESS);
+			httpstatus=HttpStatus.OK;
 		}
 		else {	
 			bm.add(new BusinessMessage("Not posted.."));
 		    res.setBusinessMessage(bm);
 		    res.setStatus(StatusEnum.FAIL);
+		    httpstatus=HttpStatus.NOT_FOUND;
 		}
 		res.setResObj(collegeService.getCollegeList());
-		return new ResponseEntity<>(res,HttpStatus.OK);
+		return new ResponseEntity<>(res,httpstatus);
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Response> upadteCollege(@RequestBody College college,@PathVariable int id)
+	public ResponseEntity<Response> upadteCollege(@RequestBody CollegeRq college,@PathVariable int id)
 	{
 		res=new Response();
 		bm=new ArrayList<BusinessMessage>();
@@ -78,14 +82,16 @@ public class Controller {
 			bm.add(new BusinessMessage("Successfully updated"));
 			res.setBusinessMessage(bm);
 			res.setStatus(StatusEnum.SUCCESS);
+			httpstatus=HttpStatus.OK;
 		}
 		else {	
 			bm.add(new BusinessMessage("Not updated"));
 		    res.setBusinessMessage(bm);
 		    res.setStatus(StatusEnum.FAIL);
+		    httpstatus=HttpStatus.NOT_FOUND;
 		}
 		res.setResObj(collegeService.getCollege(id));
-		return new ResponseEntity<>(res,HttpStatus.OK);
+		return new ResponseEntity<>(res,httpstatus);
 	}
 	
 	@DeleteMapping("/update/{id}")
@@ -98,14 +104,16 @@ public class Controller {
 			bm.add(new BusinessMessage("Successfully deleted"));
 			res.setBusinessMessage(bm);
 			res.setStatus(StatusEnum.SUCCESS);
+			httpstatus=HttpStatus.OK;
 		}
 		else {	
 			bm.add(new BusinessMessage("Not deleted"));
 		    res.setBusinessMessage(bm);
 		    res.setStatus(StatusEnum.FAIL);
+		    httpstatus=HttpStatus.NOT_FOUND;
 		}
 		
-		return new ResponseEntity<>(res,HttpStatus.OK);
+		return new ResponseEntity<>(res,httpstatus);
 	}
 
 	

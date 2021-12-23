@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.College;
 import com.example.demo.repository.CollegeRepository;
+import com.example.demo.request.CollegeRq;
 import com.example.demo.service.CollegeService;
 
 @Service
@@ -32,8 +33,11 @@ public class CollegeServiceImpl implements CollegeService {
 	}
 
 	@Override
-	public boolean addCollege(College college) {
-		College colleg=collegeRepository.save(college);
+	public boolean addCollege(CollegeRq college) {
+		College coll=new College();
+		coll.setLocation(college.getLocation());
+		coll.setName(college.getName());
+		College colleg=collegeRepository.save(coll);
 		if(colleg != null)
 		    return true;
 		else 
@@ -41,7 +45,7 @@ public class CollegeServiceImpl implements CollegeService {
 	}
 
 	@Override
-	public boolean updateCollege(College college,int id) {
+	public boolean updateCollege(CollegeRq college,int id) {
 		College coll= getCollege(id);
 		if(coll != null) {
 			coll.setLocation(college.getLocation());
