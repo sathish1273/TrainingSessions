@@ -6,7 +6,7 @@ public class Response {
 	
 	private List<BusinessMessage> businessMessage;
 	private StatusEnum status;
-	private Object resObj;
+	private Object response;
 	public List<BusinessMessage> getBusinessMessage() {
 		return businessMessage;
 	}
@@ -19,12 +19,13 @@ public class Response {
 	public void setStatus(StatusEnum status) {
 		this.status = status;
 	}
-	public Object getResObj() {
-		return resObj;
+	public Object getResponse() {
+		return response;
 	}
-	public void setResObj(Object resObj) {
-		this.resObj = resObj;
+	public void setResponse(Object response) {
+		this.response = response;
 	}
+	
 	
 
 }

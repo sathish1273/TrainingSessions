@@ -68,7 +68,7 @@ public class Controller {
 		    res.setStatus(StatusEnum.FAIL);
 		    httpstatus=HttpStatus.NOT_FOUND;
 		}
-		res.setResObj(collegeService.getCollegeList());
+		res.setResponse(collegeService.getCollegeList());
 		return new ResponseEntity<>(res,httpstatus);
 	}
 	
@@ -90,11 +90,11 @@ public class Controller {
 		    res.setStatus(StatusEnum.FAIL);
 		    httpstatus=HttpStatus.NOT_FOUND;
 		}
-		res.setResObj(collegeService.getCollege(id));
+		res.setResponse(collegeService.getCollege(id));
 		return new ResponseEntity<>(res,httpstatus);
 	}
 	
-	@DeleteMapping("/update/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Response> deleteCollege(@PathVariable int id)
 	{
 		res=new Response();
