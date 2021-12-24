@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.College;
@@ -28,12 +32,13 @@ public class CollegeServiceImpl implements CollegeService {
 	}
 
 	@Override
-	public List<College> getCollegeList() {
-		return collegeRepository.findAll();
+	public List<College> getCollegeList(int pageNumber, int pageSize) {
+		Pageable pageable= PageRequest.of(pageNumber, pageSize, Sort.by(Direction.ASC, "name"));
+		return collegeRepository.findAll(pageable).getContent();
 	}
 
 	@Override
-	public boolean addCollege(CollegeRq college) {
+	public College addCollege(CollegeRq college) {
 		College coll=new College();
 		coll.setLocation(college.getLocation());
 		coll.setName(college.getName());
@@ -41,10 +46,7 @@ public class CollegeServiceImpl implements CollegeService {
 		coll.setYearOfEstablishment(college.getYearOfEstablishment());
 		coll.setCollegeType(college.getCollegeType());
 		College colleg=collegeRepository.save(coll);
-		if(colleg != null)
-		    return true;
-		else 
-			return false;
+		return colleg;
 	}
 
 	@Override

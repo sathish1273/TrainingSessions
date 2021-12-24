@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.College;
@@ -45,9 +46,9 @@ public class Controller {
 	}
 	
 	@GetMapping("/list")
-	public ResponseEntity<List<College>> getCollegeList()
+	public ResponseEntity<List<College>> getCollegeList(@RequestParam int pageNumber, @RequestParam int pageSize)
 	{
-		return new ResponseEntity<>(collegeService.getCollegeList(),HttpStatus.OK);
+		return new ResponseEntity<>(collegeService.getCollegeList(pageNumber,pageSize),HttpStatus.OK);
 	}
 	
 	@PostMapping("/add")
@@ -55,8 +56,8 @@ public class Controller {
 	{
 		res=new Response();
 		bm=new ArrayList<BusinessMessage>();
-		boolean b=collegeService.addCollege(college);
-		if(b) {
+		College b=collegeService.addCollege(college);
+		if(b != null) {
 			bm.add(new BusinessMessage("Successfully posted to DB"));
 			res.setBusinessMessage(bm);
 			res.setStatus(StatusEnum.SUCCESS);
@@ -68,7 +69,7 @@ public class Controller {
 		    res.setStatus(StatusEnum.FAIL);
 		    httpstatus=HttpStatus.NOT_FOUND;
 		}
-		res.setResponse(collegeService.getCollegeList());
+		res.setResponse(b);
 		return new ResponseEntity<>(res,httpstatus);
 	}
 	
