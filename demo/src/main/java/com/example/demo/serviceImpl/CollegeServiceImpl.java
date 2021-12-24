@@ -37,6 +37,9 @@ public class CollegeServiceImpl implements CollegeService {
 		College coll=new College();
 		coll.setLocation(college.getLocation());
 		coll.setName(college.getName());
+		coll.setNoOfBranches(college.getNoOfBranches());
+		coll.setYearOfEstablishment(college.getYearOfEstablishment());
+		coll.setCollegeType(college.getCollegeType());
 		College colleg=collegeRepository.save(coll);
 		if(colleg != null)
 		    return true;
