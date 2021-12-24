@@ -11,9 +11,11 @@ import com.example.demo.entity.College;
 @Repository
 public interface CollegeRepository extends JpaRepository<College, Integer> {
 	
-	List<College> findByCollegeTypeAndLocation(String CollegeType,String location);
+	List<College> findByCollegeTypeAndLocation(String collegeType,String location);
 	List<College> findByNoOfBranchesOrYearOfEstablishment(int noOfBranches, int year);
 	List<College> findByNameContains(String name);
+	List<College> findByNameContainsOrderByNameDesc(String name);
+	List<College> findByNameContainsAndLocationOrderByLocationAsc(String name,String location);
 	List<College> findTop10ByOrderByName();
 	
 	@Query(value="from College c where c.name=:name and c.location=:location")

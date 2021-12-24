@@ -23,7 +23,6 @@ public class CollegeServiceImpl implements CollegeService {
 
 	@Override
 	public College getCollege(int id) {
-		// TODO Auto-generated method stub
 		College college=null;
 		Optional<College> coll= collegeRepository.findById(id);
 		if(coll.isPresent())
@@ -71,6 +70,11 @@ public class CollegeServiceImpl implements CollegeService {
 		}
 		else 
 			return false;
+	}
+
+	@Override
+	public List<College> getCollegeList(CollegeRq college) {
+		return collegeRepository.findByNameContainsAndLocationOrderByLocationAsc(college.getName(), college.getLocation());
 	}
 
 }

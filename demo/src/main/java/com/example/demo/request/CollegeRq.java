@@ -2,7 +2,7 @@ package com.example.demo.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CollegeRq {
 	private int id;
 	private String name;
