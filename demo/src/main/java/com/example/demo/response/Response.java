@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Response {
 	
-	private List<BusinessMessage> businessMessage;
 	private StatusEnum status;
+	private List<BusinessMessage> businessMessage;	
 	private Object response;
 	public List<BusinessMessage> getBusinessMessage() {
 		return businessMessage;
