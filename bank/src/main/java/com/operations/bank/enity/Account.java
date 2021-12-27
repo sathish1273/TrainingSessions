@@ -24,7 +24,7 @@ public class Account {
 	private double openingBal;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "userId", insertable = false, updatable = false)
 	private User user;
 	
 	

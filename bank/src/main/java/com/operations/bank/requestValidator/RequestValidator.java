@@ -1,7 +1,12 @@
 package com.operations.bank.requestValidator;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -90,6 +95,15 @@ public class RequestValidator {
 		   return account.get();
 		else
 		   return null;
+	}
+	
+	public static LocalDate getLocalDate(String date)
+	{
+//		Date dateUtil = new SimpleDateFormat("MMMM", Locale.ENGLISH).parse(monthName);
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(dateUtil);
+//		LocalDate.of(Integer.parseInt(date.substring(date.length()-4,date.length())), cal.get(Calendar.MONTH), cal.get(Calendar.));
+		return LocalDate.now();
 	}
 
 }

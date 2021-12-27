@@ -16,11 +16,11 @@ public class Transactions {
 	private long transactionId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "accountNo")
+    @JoinColumn(name = "accountNo", insertable = false, updatable = false)
 	private Account fromAccount;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "accountNo")
+    @JoinColumn(name = "accountNo", insertable = false, updatable = false)
 	private Account toAccount;
 	
 	private double amount;

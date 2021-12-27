@@ -2,6 +2,7 @@ package com.operations.bank.serviceImpl;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -35,12 +36,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 	@Override
 	public Response addUser(UserRequest request) {
 		Response response=new Response();
-		List<BusinessMessage> list= RequestValidator.validateRequest(request);
-		if(list.size() > 0) {
-			response.setStatus(StatusEnum.FAIL);
-			response.setBusinessMessage(list);
-		}
-		else {
+		List<BusinessMessage> list= new ArrayList<BusinessMessage>();
 			User u = new User(request.getFname(), request.getLname(), request.getAge(), request.getuID(), request.getPhoneNo(), request.getEmail());
 			User user=userRepository.save(u);
 			if(!Objects.isNull(user))
@@ -56,7 +52,6 @@ public class RegistrationServiceImpl implements RegistrationService {
 				}
 				
 			}
-		}
 		return response;
 	}
 	
