@@ -1,27 +1,17 @@
-package com.operations.bank.enity;
+package com.operations.bank.request;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
-public class User {
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long userId;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class UserRequest {
+	
 	private String fname;
 	private String lname;
 	private int age;
 	private int uID;
 	private int phoneNo;
 	private String email;
-	public long getUserId() {
-		return userId;
-	}
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
+	
 	public String getFname() {
 		return fname;
 	}
@@ -58,15 +48,5 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public User(String fname, String lname, int age, int uID, int phoneNo, String email) {
-		super();
-		this.fname = fname;
-		this.lname = lname;
-		this.age = age;
-		this.uID = uID;
-		this.phoneNo = phoneNo;
-		this.email = email;
-	}
-
 	
 }

@@ -71,9 +71,8 @@ public class Transactions {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	public Transactions(long transactionId, Account fromAccount, Account toAccount, double amount, String comments) {
+	public Transactions(Account fromAccount, Account toAccount, double amount, String comments) {
 		super();
-		this.transactionId = transactionId;
 		this.fromAccount = fromAccount;
 		this.toAccount = toAccount;
 		this.amount = amount;
