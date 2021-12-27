@@ -1,5 +1,8 @@
 package com.example.demo.serviceImpl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,7 +77,11 @@ public class CollegeServiceImpl implements CollegeService {
 
 	@Override
 	public List<College> getCollegeList(CollegeRq college) {
-		return collegeRepository.findByNameContainsAndLocationOrderByLocationAsc(college.getName(), college.getLocation());
+		//return collegeRepository.findByNameContainsAndLocationOrderByLocationAsc(college.getName(), college.getLocation());
+		//Collection<Integer> list= Arrays.asList(2009,2010);
+		//return collegeRepository.findByYearOfEstablishmentIn(list);
+		
+		return collegeRepository.findByActiveStatusTrue();
 	}
 
 }

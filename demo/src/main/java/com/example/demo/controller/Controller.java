@@ -51,7 +51,7 @@ public class Controller {
 		return new ResponseEntity<>(collegeService.getCollegeList(pageNumber,pageSize),HttpStatus.OK);
 	}
 	
-	@PostMapping("/getList")
+	@PostMapping("/filteredList")
 	public ResponseEntity<List<College>> getCollegeListByCustomeQueries(@RequestBody CollegeRq college)
 	{
 		return new ResponseEntity<>(collegeService.getCollegeList(college),HttpStatus.OK);
@@ -105,7 +105,7 @@ public class Controller {
 	public ResponseEntity<Response> deleteCollege(@PathVariable int id)
 	{
 		res=new Response();
-		bm=new ArrayList<BusinessMessage>();
+		bm=new ArrayList<>();
 		boolean b=collegeService.deleteCollege(id);
 		if(b) {
 			bm.add(new BusinessMessage("Successfully deleted"));

@@ -1,5 +1,7 @@
 package com.example.demo.request;
 
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -10,8 +12,22 @@ public class CollegeRq {
 	private int yearOfEstablishment;
 	private int noOfBranches;
 	private String collegeType;
+	private LocalDate startDate;
+	private boolean activeStatus;
 	
 	
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
+	public boolean isActiveStatus() {
+		return activeStatus;
+	}
+	public void setActiveStatus(boolean activeStatus) {
+		this.activeStatus = activeStatus;
+	}
 	public int getYearOfEstablishment() {
 		return yearOfEstablishment;
 	}

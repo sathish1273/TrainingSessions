@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +18,22 @@ public class College {
 	private int yearOfEstablishment;
 	private int noOfBranches;
 	private String collegeType;
+	private LocalDate startDate;
+	private boolean activeStatus;
 	
+	
+	public boolean isActiveStatus() {
+		return activeStatus;
+	}
+	public void setActiveStatus(boolean activeStatus) {
+		this.activeStatus = activeStatus;
+	}
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
 	public int getYearOfEstablishment() {
 		return yearOfEstablishment;
 	}
