@@ -21,6 +21,7 @@ public class Account {
 	private LocalDate createdDate;
 	private LocalTime createdTime;
 	private double openingBal;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
 	private User user;
