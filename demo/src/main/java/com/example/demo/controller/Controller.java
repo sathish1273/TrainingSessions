@@ -52,9 +52,9 @@ public class Controller {
 	}
 	
 	@PostMapping("/filteredList")
-	public ResponseEntity<List<College>> getCollegeListByCustomeQueries(@RequestBody CollegeRq college)
+	public ResponseEntity<List<College>> getCollegeListByCustomeQueries()
 	{
-		return new ResponseEntity<>(collegeService.getCollegeList(college),HttpStatus.OK);
+		return new ResponseEntity<>(collegeService.getCollegeList(),HttpStatus.OK);
 	}
 	
 	@PostMapping("/add")
