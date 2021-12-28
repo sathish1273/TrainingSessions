@@ -52,7 +52,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 			{
 				Optional<User> uu=userRepository.findById(user.getUserId());
 				if(uu.isPresent()) {
-					Account account=new Account(generateAccountNo(accountNumberLength), LocalDate.now(), LocalTime.now(), initialOpeningBalance, user,request.getAccountType());
+					Account account=new Account(generateAccountNo(accountNumberLength), LocalDate.now(), LocalTime.now(), initialOpeningBalance, user,request.getAccountType(),initialOpeningBalance);
 					Account savedAccount=accountRepository.save(account);
 					if(savedAccount != null)
 					{

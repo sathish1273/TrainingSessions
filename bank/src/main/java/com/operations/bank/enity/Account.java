@@ -26,12 +26,25 @@ public class Account {
 	private LocalDate createdDate;
 	private LocalTime createdTime;
 	private double openingBal;
+	private double availableBal;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", insertable = true, updatable = true)
 	private User user;
 	
 	
+	public long getAccountId() {
+		return accountId;
+	}
+	public void setAccountId(long accountId) {
+		this.accountId = accountId;
+	}
+	public double getAvailableBal() {
+		return availableBal;
+	}
+	public void setAvailableBal(double availableBal) {
+		this.availableBal = availableBal;
+	}
 	public String getAccountType() {
 		return accountType;
 	}
@@ -68,7 +81,7 @@ public class Account {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public Account(long accountNo, LocalDate createdDate, LocalTime createdTime, double openingBal, User user,String accountType) {
+	public Account(long accountNo, LocalDate createdDate, LocalTime createdTime, double openingBal, User user,String accountType,double availableBal) {
 		super();
 		this.accountNo = accountNo;
 		this.createdDate = createdDate;
@@ -76,6 +89,7 @@ public class Account {
 		this.openingBal = openingBal;
 		this.user = user;
 		this.accountType=accountType;
+		this.availableBal=availableBal;
 	}
 	public Account()
 	{

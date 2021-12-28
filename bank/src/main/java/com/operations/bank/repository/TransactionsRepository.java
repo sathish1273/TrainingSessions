@@ -12,4 +12,5 @@ import com.operations.bank.enity.Transactions;
 public interface TransactionsRepository extends JpaRepository<Transactions, Long>{
 
 	List<Transactions> findByDateBetween(LocalDate from,LocalDate to);
+	List<Transactions> findByFromAccountOrToAccountAndDateBetween(long fromAccount,long toAccount,LocalDate startDate, LocalDate endDate);
 }

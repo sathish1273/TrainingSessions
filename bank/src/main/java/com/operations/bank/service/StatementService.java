@@ -6,5 +6,5 @@ import com.operations.bank.response.Response;
 
 public interface StatementService {
 
-	public Response getTransactions(LocalDate startDate,LocalDate endDate);
+	public Response getTransactions(LocalDate startDate,LocalDate endDate,long accountNumber);
 }

@@ -22,12 +22,12 @@ public class StatementServiceImpl implements StatementService{
 	TransactionsRepository transactionsRepository;
 
 	@Override
-	public Response getTransactions(LocalDate startDate,LocalDate endDate) {
+	public Response getTransactions(LocalDate startDate,LocalDate endDate,long accountNumber) {
 		
 		Response response=new Response();
 		List<BusinessMessage> list= new ArrayList<BusinessMessage>();
-		List<Transactions> transactionsList=transactionsRepository.findByDateBetween(startDate, endDate);
-		if(transactionsList.size() > 0) {
+		List<Transactions> transactionsList=transactionsRepository.findByFromAccountOrToAccountAndDateBetween(accountNumber,accountNumber,startDate, endDate);
+		if(!transactionsList.isEmpty()) {
 		list.add(new BusinessMessage(BusinessValidationMessageConstants.TRANSACTIONS_FETCHED));
 		response.setStatus(StatusEnum.SUCCESS);
 		response.setBusinessMessage(list);
@@ -41,4 +41,5 @@ public class StatementServiceImpl implements StatementService{
 		return response;
 	}
 
+	
 }

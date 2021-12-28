@@ -18,6 +18,8 @@ import com.operations.bank.repository.AccountRepository;
 import com.operations.bank.request.FundtransferRquest;
 import com.operations.bank.request.UserRequest;
 
+import antlr.StringUtils;
+
 @Component
 public class RequestValidator {
 	
@@ -46,15 +48,15 @@ public class RequestValidator {
 		List<BusinessMessage> list=new ArrayList<>();
 		if(Objects.isNull(request))
 			list.add(new BusinessMessage(BusinessValidationMessageConstants.REQUEST_NOTNULL));
-		else if(Objects.isNull(request.getFname()) || request.getFname().isEmpty() || request.getFname().isBlank())
+		if(Objects.isNull(request.getFname()) || request.getFname().isEmpty() || request.getFname().isBlank())
 			list.add(new BusinessMessage(BusinessValidationMessageConstants.FIRST_NOTNULL));
-		else if(Objects.isNull(request.getLname()) || request.getLname().isEmpty() || request.getLname().isBlank())
+		if(Objects.isNull(request.getLname()) || request.getLname().isEmpty() || request.getLname().isBlank())
 			list.add(new BusinessMessage(BusinessValidationMessageConstants.LAST_NOTNULL));
-		else if(Objects.isNull(request.getAge()) || request.getAge() < age )
+		if(Objects.isNull(request.getAge()) || request.getAge() < age )
 			list.add(new BusinessMessage(BusinessValidationMessageConstants.AGE_GREATERTHAN_EIGHTEEN));
-		else if(Objects.isNull(request.getPhoneNo()) || !isValidMobileNo(String.valueOf(request.getPhoneNo())))
+		if(Objects.isNull(request.getPhoneNo()) || !isValidMobileNo(String.valueOf(request.getPhoneNo())))
 			list.add(new BusinessMessage(BusinessValidationMessageConstants.MOBILENO_INVALID));
-		else if(Objects.isNull(request.getEmail()) || !isValidEmail(request.getEmail()))
+		if(Objects.isNull(request.getEmail()) || !isValidEmail(request.getEmail()))
 			list.add(new BusinessMessage(BusinessValidationMessageConstants.EMAIL_INVALID));
 		
 		return list;
@@ -77,17 +79,20 @@ public class RequestValidator {
 	
 	
 	
-	public static LocalDate getDate(String date,String type)
+	public static LocalDate getDate(String monthh,String year,String type)
 	{
 		try {
-			date=date.trim();
+			if(monthh == null || year == null)
+				return null;
+			monthh=monthh.trim();
+			year=year.trim();
 			String month=null;
 			LocalDate today = null;
-			if(date != null && date.length()>7 && date.contains(" ")) {
-			Map<String,String> maplist= getMonthNo(date);
+			if(monthh != null && monthh.length()>2) {
+			Map<String,String> maplist= getMonthNo();
 			for(Map.Entry<String,String> entry : maplist.entrySet())
 			{
-				if(entry.getValue().contains(date.substring(0, date.length()-5)))
+				if(entry.getValue().contains(monthh))
 				{
 				month=entry.getKey();
 				break;
@@ -96,7 +101,7 @@ public class RequestValidator {
 			String dates="01";
 			if(type.equals("endDate"))
 				dates=month.substring(2, 4);
-			today = LocalDate.parse(date.substring(date.length()-4,date.length())+"-"+month.substring(0, 2)+"-"+dates);	
+			today = LocalDate.parse(year+"-"+month.substring(0, 2)+"-"+dates);	
 			}
 			return today;
 		} catch (Exception e) {
@@ -105,7 +110,7 @@ public class RequestValidator {
 		
 	}
 	
-	public static Map<String,String> getMonthNo(String monthName)
+	public static Map<String,String> getMonthNo()
 	{
 		Map<String,String> maplist=new TreeMap<>();
 		maplist.put("0131", "January");

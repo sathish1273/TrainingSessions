@@ -36,14 +36,14 @@ public class FundTransferServiceImpl implements FundTransferService {
 		Account toAccount=getAccount(request.getToAccount());
 		Account fromAccount=getAccount(request.getFromAccount());
 		if(toAccount != null && fromAccount != null) {		
-			if(fromAccount.getOpeningBal() <= 0 || fromAccount.getOpeningBal() < request.getAmount()) {
+			if(fromAccount.getAvailableBal() <= 0 || fromAccount.getAvailableBal() < request.getAmount()) {
 				list.add(new BusinessMessage(BusinessValidationMessageConstants.INSUFFIECIENT_FUNDS));
 				response.setStatus(StatusEnum.FAIL);
 				response.setBusinessMessage(list);
 				return response;
 			}
-			fromAccount.setOpeningBal(fromAccount.getOpeningBal()-request.getAmount());
-			toAccount.setOpeningBal(toAccount.getOpeningBal()+request.getAmount());
+			fromAccount.setAvailableBal(fromAccount.getAvailableBal()-request.getAmount());
+			toAccount.setAvailableBal(toAccount.getAvailableBal()+request.getAmount());
 			accountRepository.save(toAccount);
 			accountRepository.save(fromAccount);
 			Transactions t=new Transactions(request.getFromAccount(), request.getToAccount(), request.getAmount(), request.getComments(), LocalDate.now(),LocalTime.now());
