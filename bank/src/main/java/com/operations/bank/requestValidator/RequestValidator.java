@@ -1,5 +1,6 @@
 package com.operations.bank.requestValidator;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -7,19 +8,21 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.operations.bank.dto.BusinessMessage;
-import com.operations.bank.enity.Account;
 import com.operations.bank.repository.AccountRepository;
 import com.operations.bank.request.FundtransferRquest;
 import com.operations.bank.request.UserRequest;
 
+@Component
 public class RequestValidator {
 	
 	@Autowired
@@ -34,15 +37,12 @@ public class RequestValidator {
 		List<BusinessMessage> list=new ArrayList<>();
 		if(Objects.isNull(request))
 			list.add(new BusinessMessage("Request should not be null"));
-		else if(Objects.isNull(request.getFromAccount()) || !validateAccountNumber(request.getFromAccount()))
+		else if(Objects.isNull(request.getFromAccount()))
 			list.add(new BusinessMessage("Invalid from Account Number"));
-		else if(Objects.isNull(request.getToAccount()) || !validateAccountNumber(request.getFromAccount()))
+		else if(Objects.isNull(request.getToAccount()))
 			list.add(new BusinessMessage("Invalid To Account Number"));
-		else if(Objects.isNull(request.getAmount()) || request.getAmount() > amount )
+		else if(Objects.isNull(request.getAmount()) || request.getAmount() < amount )
 			list.add(new BusinessMessage("Amount must be greater than 0"));
-		else if(Objects.isNull(request.getFromAccount()) || getAccount(request.getFromAccount()).getOpeningBal() < request.getAmount())
-			list.add(new BusinessMessage("Insufficient funds in from Account."));
-		
 		return list;
 	}
 	public static List<BusinessMessage> validateRequest(UserRequest request)
@@ -79,31 +79,47 @@ public class RequestValidator {
 	     return matcher.matches();
 	}
 	
-	public static boolean validateAccountNumber(int accountNo)
+	
+	
+	public static LocalDate getDate(String date,String type)
 	{
-		Optional<Account> account=accountRepository.findByAccountNo(accountNo);
-		if(account.isPresent())
-		   return true;
-		else
-		   return false;
+		date=date.trim();
+		String month=null;
+		LocalDate today = null;
+		if(date != null && date.length()>7 && date.contains(" ")) {
+		Map<String,String> maplist= getMonthNo(date);
+		for(Map.Entry<String,String> entry : maplist.entrySet())
+		{
+			if(entry.getValue().contains(date.substring(0, date.length()-5)))
+			{
+			month=entry.getKey();
+			break;
+			}
+		}
+		String dates="01";
+		if(type.equals("endDate"))
+			dates=month.substring(2, 4);
+		today = LocalDate.parse(date.substring(date.length()-4,date.length())+"-"+month.substring(0, 2)+"-"+dates);	
+		}
+		return today;
 	}
 	
-	public static Account getAccount(int accountNo)
+	public static Map<String,String> getMonthNo(String monthName)
 	{
-		Optional<Account> account=accountRepository.findByAccountNo(accountNo);
-		if(account.isPresent())
-		   return account.get();
-		else
-		   return null;
-	}
-	
-	public static LocalDate getLocalDate(String date)
-	{
-//		Date dateUtil = new SimpleDateFormat("MMMM", Locale.ENGLISH).parse(monthName);
-//		Calendar cal = Calendar.getInstance();
-//		cal.setTime(dateUtil);
-//		LocalDate.of(Integer.parseInt(date.substring(date.length()-4,date.length())), cal.get(Calendar.MONTH), cal.get(Calendar.));
-		return LocalDate.now();
+		Map<String,String> maplist=new TreeMap<String, String>();
+		maplist.put("0131", "January");
+		maplist.put("0228", "Febrauary");
+		maplist.put("0331", "March");
+		maplist.put("0430", "April");
+		maplist.put("0531", "May");
+		maplist.put("0630", "June");
+		maplist.put("0731", "July");
+		maplist.put("0831", "August");
+		maplist.put("0930", "September");
+		maplist.put("1031", "October");
+		maplist.put("1130", "November");
+		maplist.put("1231", "December");
+		return maplist;
 	}
 
 }

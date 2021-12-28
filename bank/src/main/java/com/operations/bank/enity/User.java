@@ -8,13 +8,13 @@ import javax.persistence.Id;
 @Entity
 public class User {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private long userId;
 	private String fname;
 	private String lname;
 	private int age;
-	private int uID;
-	private int phoneNo;
+	private long uID;
+	private long phoneNo;
 	private String email;
 	public long getUserId() {
 		return userId;
@@ -40,16 +40,16 @@ public class User {
 	public void setAge(int age) {
 		this.age = age;
 	}
-	public int getuID() {
+	public long getuID() {
 		return uID;
 	}
-	public void setuID(int uID) {
+	public void setuID(long uID) {
 		this.uID = uID;
 	}
-	public int getPhoneNo() {
+	public long getPhoneNo() {
 		return phoneNo;
 	}
-	public void setPhoneNo(int phoneNo) {
+	public void setPhoneNo(long phoneNo) {
 		this.phoneNo = phoneNo;
 	}
 	public String getEmail() {
@@ -58,7 +58,7 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public User(String fname, String lname, int age, int uID, int phoneNo, String email) {
+	public User(String fname, String lname, int age, long uID, long phoneNo, String email) {
 		super();
 		this.fname = fname;
 		this.lname = lname;
@@ -67,6 +67,8 @@ public class User {
 		this.phoneNo = phoneNo;
 		this.email = email;
 	}
-
+	public User() {
+		
+	}
 	
 }

@@ -1,5 +1,6 @@
 package com.operations.bank.serviceImpl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +22,11 @@ public class StatementServiceImpl implements StatementService{
 	TransactionsRepository transactionsRepository;
 
 	@Override
-	public Response getTransactions(String date) {
+	public Response getTransactions(LocalDate startDate,LocalDate endDate) {
 		
 		Response response=new Response();
 		List<BusinessMessage> list= new ArrayList<BusinessMessage>();
-		List<Transactions> transactionsList=transactionsRepository.findByDateBetween(RequestValidator.getLocalDate(date), RequestValidator.getLocalDate(date));
+		List<Transactions> transactionsList=transactionsRepository.findByDateBetween(startDate, endDate);
 		if(transactionsList.size() > 0) {
 		list.add(new BusinessMessage("Transaction successfully featched."));
 		response.setStatus(StatusEnum.SUCCESS);

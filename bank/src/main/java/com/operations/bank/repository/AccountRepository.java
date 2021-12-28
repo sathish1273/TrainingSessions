@@ -10,6 +10,6 @@ import com.operations.bank.enity.Account;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
 	
-	Optional<Account> findByAccountNo(int accountNo);
+	Optional<Account> findByAccountNo(long accountNo);
 
 }

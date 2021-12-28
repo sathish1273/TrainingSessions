@@ -1,7 +1,10 @@
 package com.operations.bank.serviceImpl;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,25 +33,53 @@ public class FundTransferServiceImpl implements FundTransferService {
 	public Response fundtransfer(FundtransferRquest request) {
 		Response response=new Response();
 		List<BusinessMessage> list=new ArrayList<>();
-		Account toAccount=RequestValidator.getAccount(request.getToAccount());
-		Account fromAccount=RequestValidator.getAccount(request.getToAccount());
-		if(toAccount != null && fromAccount != null) {
+		Account toAccount=getAccount(request.getToAccount());
+		Account fromAccount=getAccount(request.getFromAccount());
+		if(toAccount != null && fromAccount != null) {		
+			if(fromAccount.getOpeningBal() <= 0 || fromAccount.getOpeningBal() < request.getAmount()) {
+				list.add(new BusinessMessage("Insufficient funds in from Account."));
+				response.setStatus(StatusEnum.FAIL);
+				response.setBusinessMessage(list);
+				return response;
+			}
 			fromAccount.setOpeningBal(fromAccount.getOpeningBal()-request.getAmount());
-			toAccount.setOpeningBal(fromAccount.getOpeningBal()+request.getAmount());
+			toAccount.setOpeningBal(toAccount.getOpeningBal()+request.getAmount());
 			accountRepository.save(toAccount);
 			accountRepository.save(fromAccount);
-			Transactions t=new Transactions(RequestValidator.getAccount(request.getFromAccount()), RequestValidator.getAccount(request.getToAccount()), request.getAmount(), request.getComments());
+			Transactions t=new Transactions(request.getFromAccount(), request.getToAccount(), request.getAmount(), request.getComments(), LocalDate.now(),LocalTime.now());
 			Transactions transaction=transactionsRepository.save(t);
 			if(transaction != null)
 			{
-				list.add(new BusinessMessage("Fund Transfer done successfully."));
+				list.add(new BusinessMessage("Funds Transfer done successfully."));
 				response.setStatus(StatusEnum.SUCCESS);
 				response.setBusinessMessage(list);
-				response.setResponse("Transfered Amount : "+transaction.getAmount());
+				response.setResponse("Transfered Amount : "+transaction.getAmount()+" to an account : "+toAccount.getAccountNo());
 			}
+		}
+		else
+		{
+			list.add(new BusinessMessage("Entered accounts are incorrect."));
+			response.setStatus(StatusEnum.FAIL);
+			response.setBusinessMessage(list);
 		}
 		return response;
 	}
+	public boolean validateAccountNumber(long accountNo)
+	{
+		Optional<Account> account=accountRepository.findByAccountNo(accountNo);
+		if(account.isPresent())
+		   return true;
+		else
+		   return false;
+	}
 	
+	public Account getAccount(long accountNo)
+	{
+		Optional<Account> account=accountRepository.findByAccountNo(accountNo);
+		if(account.isPresent())
+		   return account.get();
+		else
+		   return null;
+	}
 
 }

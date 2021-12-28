@@ -8,10 +8,17 @@ public class UserRequest {
 	private String fname;
 	private String lname;
 	private int age;
-	private int uID;
-	private int phoneNo;
+	private long uID;
+	private long phoneNo;
 	private String email;
+	private String accountType;
 	
+	public String getAccountType() {
+		return accountType;
+	}
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
 	public String getFname() {
 		return fname;
 	}
@@ -30,16 +37,16 @@ public class UserRequest {
 	public void setAge(int age) {
 		this.age = age;
 	}
-	public int getuID() {
+	public long getuID() {
 		return uID;
 	}
-	public void setuID(int uID) {
+	public void setuID(long uID) {
 		this.uID = uID;
 	}
-	public int getPhoneNo() {
+	public long getPhoneNo() {
 		return phoneNo;
 	}
-	public void setPhoneNo(int phoneNo) {
+	public void setPhoneNo(long phoneNo) {
 		this.phoneNo = phoneNo;
 	}
 	public String getEmail() {

@@ -1,5 +1,6 @@
 package com.operations.bank.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,8 @@ public class RegistrationController {
 	Response res=null;
 	List<BusinessMessage> bm=null;
 	HttpStatus httpstatus=null;
+	public static final String startDate="startDate";
+	public static final String endDate="endDate";
 	
 	@GetMapping("/")
 	public ResponseEntity<String> healthCheck()
@@ -82,21 +85,23 @@ public class RegistrationController {
 		return new ResponseEntity<>(res,httpstatus);
 	}
 
-	@GetMapping("/fundTransfer")
+	@GetMapping("/statement")
 	public ResponseEntity<Response> fundTransfer(@RequestParam String date)
 	{
 		res=new Response();
 		bm=new ArrayList<>();
-//		List<BusinessMessage> list= RequestValidator.validateFundTransferRequest(fundtransferRequest);
-//		if(list.size() > 0) {
-//			res.setStatus(StatusEnum.FAIL);
-//			res.setBusinessMessage(list);
-//			httpstatus=HttpStatus.NOT_FOUND;
-//		}
-//		else {
-			res=statementService.getTransactions(date);
+		LocalDate starDate= RequestValidator.getDate(date,startDate);
+		LocalDate lastDate= RequestValidator.getDate(date,endDate);
+		if(starDate == null || lastDate == null) {
+			bm.add(new BusinessMessage("InValid Date.."));
+			res.setStatus(StatusEnum.FAIL);
+			res.setBusinessMessage(bm);
+			httpstatus=HttpStatus.NOT_FOUND;
+		}
+		else {
+			res=statementService.getTransactions(starDate,lastDate);
 			httpstatus=HttpStatus.OK;
-		//}
+		}
 		return new ResponseEntity<>(res,httpstatus);
 	}
 }

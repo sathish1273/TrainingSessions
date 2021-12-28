@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,6 @@ import com.operations.bank.enity.User;
 import com.operations.bank.repository.AccountRepository;
 import com.operations.bank.repository.UserRepository;
 import com.operations.bank.request.UserRequest;
-import com.operations.bank.requestValidator.RequestValidator;
 import com.operations.bank.response.Response;
 import com.operations.bank.service.RegistrationService;
 
@@ -41,21 +41,23 @@ public class RegistrationServiceImpl implements RegistrationService {
 			User user=userRepository.save(u);
 			if(!Objects.isNull(user))
 			{
-				Account account=new Account(generateAccountNo(accountNumberLength), LocalDate.now(), LocalTime.now(), initialOpeningBalance, user);
-				Account savedAccount=accountRepository.save(account);
-				if(savedAccount != null)
-				{
-					list.add(new BusinessMessage("User successfully saved."));
-					response.setStatus(StatusEnum.SUCCESS);
-					response.setBusinessMessage(list);
-					response.setResponse("Generated Account Number : "+savedAccount.getAccountNo());
+				Optional<User> uu=userRepository.findById(user.getUserId());
+				if(uu.isPresent()) {
+					Account account=new Account(generateAccountNo(accountNumberLength), LocalDate.now(), LocalTime.now(), initialOpeningBalance, user,request.getAccountType());
+					Account savedAccount=accountRepository.save(account);
+					if(savedAccount != null)
+					{
+						list.add(new BusinessMessage("User successfully saved."));
+						response.setStatus(StatusEnum.SUCCESS);
+						response.setBusinessMessage(list);
+						response.setResponse("Generated Account Number : "+savedAccount.getAccountNo());
+					}
 				}
-				
 			}
 		return response;
 	}
 	
-	public int generateAccountNo(int length) {
+	public static Long generateAccountNo(int length) {
 		String numbers="0123456789";
 		Random r=new Random();
 		char[] otp=new char[length];
@@ -63,7 +65,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 		{
 			otp[i]=numbers.charAt(r.nextInt(numbers.length()));
 		}
-		return Integer.parseInt(otp.toString());
+		return Long.parseLong(String.copyValueOf(otp));
 	}
+	
 
 }

@@ -3,6 +3,7 @@ package com.operations.bank.enity;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,16 +16,19 @@ import javax.persistence.ManyToOne;
 public class Account {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private long accountId;
+	
+	@Column(nullable=false)
 	private long accountNo;
+	
 	private String accountType;
 	private LocalDate createdDate;
 	private LocalTime createdTime;
 	private double openingBal;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId", insertable = false, updatable = false)
+    @JoinColumn(name = "userId", insertable = true, updatable = true)
 	private User user;
 	
 	
@@ -64,15 +68,19 @@ public class Account {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public Account(int accountNo, LocalDate createdDate, LocalTime createdTime, double openingBal, User user) {
+	public Account(long accountNo, LocalDate createdDate, LocalTime createdTime, double openingBal, User user,String accountType) {
 		super();
 		this.accountNo = accountNo;
 		this.createdDate = createdDate;
 		this.createdTime = createdTime;
 		this.openingBal = openingBal;
 		this.user = user;
+		this.accountType=accountType;
 	}
-	
+	public Account()
+	{
+		
+	}
 	
 	
 }

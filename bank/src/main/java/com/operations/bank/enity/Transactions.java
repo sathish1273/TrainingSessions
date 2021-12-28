@@ -5,6 +5,8 @@ import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,16 +15,11 @@ import javax.persistence.ManyToOne;
 public class Transactions {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private long transactionId;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "accountNo", insertable = false, updatable = false)
-	private Account fromAccount;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "accountNo", insertable = false, updatable = false)
-	private Account toAccount;
-	
+	private long fromAccount;
+	private long toAccount;
 	private double amount;
 	private String comments;
 	private LocalDate date;
@@ -47,18 +44,7 @@ public class Transactions {
 	public void setTransactionId(long transactionId) {
 		this.transactionId = transactionId;
 	}
-	public Account getFromAccount() {
-		return fromAccount;
-	}
-	public void setFromAccount(Account fromAccount) {
-		this.fromAccount = fromAccount;
-	}
-	public Account getToAccount() {
-		return toAccount;
-	}
-	public void setToAccount(Account toAccount) {
-		this.toAccount = toAccount;
-	}
+	
 	public double getAmount() {
 		return amount;
 	}
@@ -71,13 +57,33 @@ public class Transactions {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	public Transactions(Account fromAccount, Account toAccount, double amount, String comments) {
+	
+	public long getFromAccount() {
+		return fromAccount;
+	}
+	public void setFromAccount(long fromAccount) {
+		this.fromAccount = fromAccount;
+	}
+	public long getToAccount() {
+		return toAccount;
+	}
+	public void setToAccount(long toAccount) {
+		this.toAccount = toAccount;
+	}
+	
+	
+	public Transactions(long fromAccount, long toAccount, double amount, String comments,
+			LocalDate date, LocalTime time) {
 		super();
 		this.fromAccount = fromAccount;
 		this.toAccount = toAccount;
 		this.amount = amount;
 		this.comments = comments;
+		this.date = date;
+		this.time = time;
 	}
-	
-	
+	public Transactions()
+	{
+		
+	}
 }
