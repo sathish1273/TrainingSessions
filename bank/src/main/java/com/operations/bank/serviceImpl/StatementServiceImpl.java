@@ -7,11 +7,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.operations.bank.constants.BusinessValidationMessageConstants;
 import com.operations.bank.dto.BusinessMessage;
 import com.operations.bank.dto.StatusEnum;
 import com.operations.bank.enity.Transactions;
 import com.operations.bank.repository.TransactionsRepository;
-import com.operations.bank.requestValidator.RequestValidator;
 import com.operations.bank.response.Response;
 import com.operations.bank.service.StatementService;
 
@@ -28,13 +28,13 @@ public class StatementServiceImpl implements StatementService{
 		List<BusinessMessage> list= new ArrayList<BusinessMessage>();
 		List<Transactions> transactionsList=transactionsRepository.findByDateBetween(startDate, endDate);
 		if(transactionsList.size() > 0) {
-		list.add(new BusinessMessage("Transaction successfully featched."));
+		list.add(new BusinessMessage(BusinessValidationMessageConstants.TRANSACTIONS_FETCHED));
 		response.setStatus(StatusEnum.SUCCESS);
 		response.setBusinessMessage(list);
 		response.setResponse(transactionsList);
 		}
 		else{
-			list.add(new BusinessMessage("No records found."));
+			list.add(new BusinessMessage(BusinessValidationMessageConstants.NO_RECORDS));
 			response.setStatus(StatusEnum.SUCCESS);
 			response.setBusinessMessage(list);
 		}

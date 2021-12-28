@@ -11,6 +11,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.operations.bank.constants.BusinessValidationMessageConstants;
 import com.operations.bank.dto.BusinessMessage;
 import com.operations.bank.dto.StatusEnum;
 import com.operations.bank.enity.Account;
@@ -37,6 +38,14 @@ public class RegistrationServiceImpl implements RegistrationService {
 	public Response addUser(UserRequest request) {
 		Response response=new Response();
 		List<BusinessMessage> list= new ArrayList<BusinessMessage>();
+		List<User> uList=userRepository.findByFnameAndLnameAndPhoneNo(request.getFname(), request.getLname(), request.getPhoneNo());
+		if(!uList.isEmpty())
+		{
+			list.add(new BusinessMessage(BusinessValidationMessageConstants.DUPLICATE_USER));
+			response.setStatus(StatusEnum.FAIL);
+			response.setBusinessMessage(list);
+			return response;
+		}
 			User u = new User(request.getFname(), request.getLname(), request.getAge(), request.getuID(), request.getPhoneNo(), request.getEmail());
 			User user=userRepository.save(u);
 			if(!Objects.isNull(user))
@@ -47,10 +56,10 @@ public class RegistrationServiceImpl implements RegistrationService {
 					Account savedAccount=accountRepository.save(account);
 					if(savedAccount != null)
 					{
-						list.add(new BusinessMessage("User successfully saved."));
+						list.add(new BusinessMessage(BusinessValidationMessageConstants.USER_SAVED));
 						response.setStatus(StatusEnum.SUCCESS);
 						response.setBusinessMessage(list);
-						response.setResponse("Generated Account Number : "+savedAccount.getAccountNo());
+						response.setResponse(BusinessValidationMessageConstants.ACCOUNT_GENERATED + savedAccount.getAccountNo());
 					}
 				}
 			}

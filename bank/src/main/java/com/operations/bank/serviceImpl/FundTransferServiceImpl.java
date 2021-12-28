@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.operations.bank.constants.BusinessValidationMessageConstants;
 import com.operations.bank.dto.BusinessMessage;
 import com.operations.bank.dto.StatusEnum;
 import com.operations.bank.enity.Account;
@@ -16,7 +17,6 @@ import com.operations.bank.enity.Transactions;
 import com.operations.bank.repository.AccountRepository;
 import com.operations.bank.repository.TransactionsRepository;
 import com.operations.bank.request.FundtransferRquest;
-import com.operations.bank.requestValidator.RequestValidator;
 import com.operations.bank.response.Response;
 import com.operations.bank.service.FundTransferService;
 
@@ -37,7 +37,7 @@ public class FundTransferServiceImpl implements FundTransferService {
 		Account fromAccount=getAccount(request.getFromAccount());
 		if(toAccount != null && fromAccount != null) {		
 			if(fromAccount.getOpeningBal() <= 0 || fromAccount.getOpeningBal() < request.getAmount()) {
-				list.add(new BusinessMessage("Insufficient funds in from Account."));
+				list.add(new BusinessMessage(BusinessValidationMessageConstants.INSUFFIECIENT_FUNDS));
 				response.setStatus(StatusEnum.FAIL);
 				response.setBusinessMessage(list);
 				return response;
@@ -50,15 +50,15 @@ public class FundTransferServiceImpl implements FundTransferService {
 			Transactions transaction=transactionsRepository.save(t);
 			if(transaction != null)
 			{
-				list.add(new BusinessMessage("Funds Transfer done successfully."));
+				list.add(new BusinessMessage(BusinessValidationMessageConstants.FUNDS_TRANSFER_SUCCESS));
 				response.setStatus(StatusEnum.SUCCESS);
 				response.setBusinessMessage(list);
-				response.setResponse("Transfered Amount : "+transaction.getAmount()+" to an account : "+toAccount.getAccountNo());
+				response.setResponse(BusinessValidationMessageConstants.TRANSFER_AMOUNT + transaction.getAmount()+ BusinessValidationMessageConstants.TO_ACCOUNT +toAccount.getAccountNo());
 			}
 		}
 		else
 		{
-			list.add(new BusinessMessage("Entered accounts are incorrect."));
+			list.add(new BusinessMessage(BusinessValidationMessageConstants.INCORRECT_ACCOUNTS));
 			response.setStatus(StatusEnum.FAIL);
 			response.setBusinessMessage(list);
 		}

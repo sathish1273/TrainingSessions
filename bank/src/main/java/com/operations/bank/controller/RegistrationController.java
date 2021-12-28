@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.operations.bank.constants.BusinessValidationMessageConstants;
 import com.operations.bank.dto.BusinessMessage;
 import com.operations.bank.dto.StatusEnum;
 import com.operations.bank.request.FundtransferRquest;
@@ -93,7 +94,7 @@ public class RegistrationController {
 		LocalDate starDate= RequestValidator.getDate(date,startDate);
 		LocalDate lastDate= RequestValidator.getDate(date,endDate);
 		if(starDate == null || lastDate == null) {
-			bm.add(new BusinessMessage("InValid Date.."));
+			bm.add(new BusinessMessage(BusinessValidationMessageConstants.INVALID_DATE));
 			res.setStatus(StatusEnum.FAIL);
 			res.setBusinessMessage(bm);
 			httpstatus=HttpStatus.NOT_FOUND;
