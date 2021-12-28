@@ -54,9 +54,9 @@ public class RegistrationController {
 	public ResponseEntity<Response> addUser(@RequestBody UserRequest userRequest)
 	{
 		res=new Response();
-		bm=new ArrayList<BusinessMessage>();
+		bm=new ArrayList<>();
 		List<BusinessMessage> list= RequestValidator.validateRequest(userRequest);
-		if(list.size() > 0) {
+		if(!list.isEmpty()) {
 			res.setStatus(StatusEnum.FAIL);
 			res.setBusinessMessage(list);
 			httpstatus=HttpStatus.NOT_FOUND;
@@ -74,7 +74,7 @@ public class RegistrationController {
 		res=new Response();
 		bm=new ArrayList<>();
 		List<BusinessMessage> list= RequestValidator.validateFundTransferRequest(fundtransferRequest);
-		if(list.size() > 0) {
+		if(!list.isEmpty()) {
 			res.setStatus(StatusEnum.FAIL);
 			res.setBusinessMessage(list);
 			httpstatus=HttpStatus.NOT_FOUND;

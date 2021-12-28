@@ -1,5 +1,6 @@
 package com.operations.bank.enity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +14,8 @@ public class User {
 	private String fname;
 	private String lname;
 	private int age;
-	private long uID;
+	@Column
+	private long uid;
 	private long phoneNo;
 	private String email;
 	public long getUserId() {
@@ -41,10 +43,10 @@ public class User {
 		this.age = age;
 	}
 	public long getuID() {
-		return uID;
+		return uid;
 	}
 	public void setuID(long uID) {
-		this.uID = uID;
+		this.uid = uID;
 	}
 	public long getPhoneNo() {
 		return phoneNo;
@@ -63,7 +65,7 @@ public class User {
 		this.fname = fname;
 		this.lname = lname;
 		this.age = age;
-		this.uID = uID;
+		this.uid = uID;
 		this.phoneNo = phoneNo;
 		this.email = email;
 	}

@@ -37,7 +37,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 	@Override
 	public Response addUser(UserRequest request) {
 		Response response=new Response();
-		List<BusinessMessage> list= new ArrayList<BusinessMessage>();
+		List<BusinessMessage> list= new ArrayList<>();
 		List<User> uList=userRepository.findByFnameAndLnameAndPhoneNo(request.getFname(), request.getLname(), request.getPhoneNo());
 		if(!uList.isEmpty())
 		{
