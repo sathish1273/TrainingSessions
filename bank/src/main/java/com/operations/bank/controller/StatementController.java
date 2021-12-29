@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,7 @@ public class StatementController {
 		List<BusinessMessage> businessMessage=new ArrayList<>();
 		LocalDate starDate= RequestValidator.getDate(month,year,startDate);
 		LocalDate lastDate= RequestValidator.getDate(month,year,endDate);
-		if(starDate == null || lastDate == null) {
+		if(Objects.isNull(starDate) || Objects.isNull(lastDate)) {
 			businessMessage.add(new BusinessMessage(BusinessValidationMessageConstants.INVALID_DATE));
 			response.setStatus(StatusEnum.FAIL);
 			response.setBusinessMessage(businessMessage);

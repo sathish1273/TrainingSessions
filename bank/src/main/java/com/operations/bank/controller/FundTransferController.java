@@ -26,7 +26,7 @@ public class FundTransferController {
 	public ResponseEntity<Response> fundTransfer(@RequestBody FundtransferRquest fundtransferRequest)
 	{
 		Response response=new Response();
-		HttpStatus httpstatus=null;
+		HttpStatus httpstatus=HttpStatus.OK;
 		List<BusinessMessage> list= RequestValidator.validateFundTransferRequest(fundtransferRequest);
 		if(!list.isEmpty()) {
 			response.setStatus(StatusEnum.FAIL);
@@ -35,7 +35,8 @@ public class FundTransferController {
 		}
 		else {
 			response=fundTransferService.fundtransfer(fundtransferRequest);
-			httpstatus=HttpStatus.OK;
+			if(response.getStatus().equals(StatusEnum.FAIL))
+			 httpstatus=HttpStatus.NOT_FOUND;
 		}
 		return new ResponseEntity<>(response,httpstatus);
 	}

@@ -38,6 +38,12 @@ public class FundTransferServiceImpl implements FundTransferService {
 		Response response=new Response();
 		List<BusinessMessage> list=new ArrayList<>();
 		Account toAccount=getAccount(request.getToAccount());
+		if(Objects.isNull(toAccount)) {
+			list.add(new BusinessMessage(BusinessValidationMessageConstants.INVALID_TO_ACCOUNT));
+			response.setStatus(StatusEnum.FAIL);
+			response.setBusinessMessage(list);
+			return response;
+		}
 		Account fromAccount=getAccount(request.getFromAccount());
 		if(!Objects.isNull(toAccount) && !Objects.isNull(fromAccount)) {		
 			if(fromAccount.getAvailableBal() <= 0 || fromAccount.getAvailableBal() < request.getAmount()) {
@@ -62,7 +68,7 @@ public class FundTransferServiceImpl implements FundTransferService {
 		}
 		else
 		{
-			list.add(new BusinessMessage(BusinessValidationMessageConstants.INCORRECT_ACCOUNTS));
+			list.add(new BusinessMessage(BusinessValidationMessageConstants.INVALIDFROM_ACCOUNT));
 			response.setStatus(StatusEnum.FAIL);
 			response.setBusinessMessage(list);
 		}

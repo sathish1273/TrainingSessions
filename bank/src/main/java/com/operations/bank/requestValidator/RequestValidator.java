@@ -73,7 +73,7 @@ public class RequestValidator {
 	public static LocalDate getDate(String monthh,String year,String type)
 	{
 		try {
-			if(monthh == null || year == null)
+			if(Objects.isNull(monthh) || Objects.isNull(year))
 				return null;
 			monthh=monthh.trim();
 			year=year.trim();

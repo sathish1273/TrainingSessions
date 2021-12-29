@@ -9,7 +9,8 @@ public class BusinessValidationMessageConstants {
 	public static final String FUNDS_TRANSFER_SUCCESS="Funds Transfer done successfully.";
 	public static final String TRANSFER_AMOUNT="Transfered Amount : ";
 	public static final String TO_ACCOUNT=" to an account : ";
-	public static final String INCORRECT_ACCOUNTS="Entered accounts are incorrect.";
+	public static final String INVALID_TO_ACCOUNT="Invalid To_Account";
+	public static final String INVALIDFROM_ACCOUNT="Invalid From_Account";
 	public static final String TRANSACTIONS_FETCHED="Transactions successfully fetched.";
 	public static final String NO_RECORDS="No records found.";
 	public static final String REQUEST_NOTNULL="Request should not be null.";
