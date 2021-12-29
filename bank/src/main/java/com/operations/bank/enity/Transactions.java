@@ -1,15 +1,11 @@
 package com.operations.bank.enity;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Transactions {
@@ -22,29 +18,20 @@ public class Transactions {
 	private long toAccount;
 	private double amount;
 	private String comments;
-	private LocalDate date;
-	private LocalTime time;
-	
-	
-	public LocalDate getDate() {
+	private LocalDateTime date;
+		
+	public LocalDateTime getDate() {
 		return date;
 	}
-	public void setDate(LocalDate date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
-	}
-	public LocalTime getTime() {
-		return time;
-	}
-	public void setTime(LocalTime time) {
-		this.time = time;
 	}
 	public long getTransactionId() {
 		return transactionId;
 	}
 	public void setTransactionId(long transactionId) {
 		this.transactionId = transactionId;
-	}
-	
+	}	
 	public double getAmount() {
 		return amount;
 	}
@@ -73,14 +60,13 @@ public class Transactions {
 	
 	
 	public Transactions(long fromAccount, long toAccount, double amount, String comments,
-			LocalDate date, LocalTime time) {
+			LocalDateTime date) {
 		super();
 		this.fromAccount = fromAccount;
 		this.toAccount = toAccount;
 		this.amount = amount;
 		this.comments = comments;
 		this.date = date;
-		this.time = time;
 	}
 	public Transactions()
 	{

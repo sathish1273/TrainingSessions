@@ -1,6 +1,7 @@
 package com.operations.bank.serviceImpl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 			{
 				Optional<User> uu=userRepository.findById(user.getUserId());
 				if(uu.isPresent()) {
-					Account account=new Account(generateAccountNo(accountNumberLength), LocalDate.now(), LocalTime.now(), initialOpeningBalance, user,request.getAccountType(),initialOpeningBalance);
+					Account account=new Account(generateAccountNo(accountNumberLength), LocalDateTime.now(), initialOpeningBalance, user,request.getAccountType(),initialOpeningBalance);
 					Account savedAccount=accountRepository.save(account);
 					if(savedAccount != null)
 					{

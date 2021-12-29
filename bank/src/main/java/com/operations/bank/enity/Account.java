@@ -1,7 +1,6 @@
 package com.operations.bank.enity;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,8 +22,7 @@ public class Account {
 	private long accountNo;
 	
 	private String accountType;
-	private LocalDate createdDate;
-	private LocalTime createdTime;
+	private LocalDateTime createdDate;
 	private double openingBal;
 	private double availableBal;
 	
@@ -56,18 +54,12 @@ public class Account {
 	}
 	public void setAccountNo(long accountNo) {
 		this.accountNo = accountNo;
-	}
-	public LocalDate getCreatedDate() {
+	}	
+	public LocalDateTime getCreatedDate() {
 		return createdDate;
 	}
-	public void setCreatedDate(LocalDate createdDate) {
+	public void setCreatedDate(LocalDateTime createdDate) {
 		this.createdDate = createdDate;
-	}
-	public LocalTime getCreatedTime() {
-		return createdTime;
-	}
-	public void setCreatedTime(LocalTime createdTime) {
-		this.createdTime = createdTime;
 	}
 	public double getOpeningBal() {
 		return openingBal;
@@ -81,11 +73,10 @@ public class Account {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public Account(long accountNo, LocalDate createdDate, LocalTime createdTime, double openingBal, User user,String accountType,double availableBal) {
+	public Account(long accountNo, LocalDateTime createdDate, double openingBal, User user,String accountType,double availableBal) {
 		super();
 		this.accountNo = accountNo;
 		this.createdDate = createdDate;
-		this.createdTime = createdTime;
 		this.openingBal = openingBal;
 		this.user = user;
 		this.accountType=accountType;

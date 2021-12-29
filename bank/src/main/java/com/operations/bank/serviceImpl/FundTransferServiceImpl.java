@@ -1,6 +1,7 @@
 package com.operations.bank.serviceImpl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public class FundTransferServiceImpl implements FundTransferService {
 			toAccount.setAvailableBal(toAccount.getAvailableBal()+request.getAmount());
 			accountRepository.save(toAccount);
 			accountRepository.save(fromAccount);
-			Transactions t=new Transactions(request.getFromAccount(), request.getToAccount(), request.getAmount(), request.getComments(), LocalDate.now(),LocalTime.now());
+			Transactions t=new Transactions(request.getFromAccount(), request.getToAccount(), request.getAmount(), request.getComments(), LocalDateTime.now());
 			Transactions transaction=transactionsRepository.save(t);
 			if(!Objects.isNull(transaction))
 			{

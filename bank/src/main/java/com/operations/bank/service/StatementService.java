@@ -1,10 +1,11 @@
 package com.operations.bank.service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.operations.bank.response.Response;
 
 public interface StatementService {
 
-	public Response getTransactions(LocalDate startDate,LocalDate endDate,long accountNumber);
+	public Response getTransactions(LocalDateTime startDate,LocalDateTime endDate,long accountNumber);
 }
+  

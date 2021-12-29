@@ -1,6 +1,7 @@
 package com.operations.bank.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class StatementController {
 			httpstatus=HttpStatus.NOT_FOUND;
 		}
 		else {
-			response=statementService.getTransactions(starDate,lastDate,accountNumber);
+			response=statementService.getTransactions(starDate.atStartOfDay(),lastDate.atStartOfDay(),accountNumber);
 			httpstatus=HttpStatus.OK;
 		}
 		return new ResponseEntity<>(response,httpstatus);

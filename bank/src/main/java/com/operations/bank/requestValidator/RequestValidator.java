@@ -1,6 +1,7 @@
 package com.operations.bank.requestValidator;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -95,6 +96,7 @@ public class RequestValidator {
 			}
 			return today;
 		} catch (Exception e) {
+			System.out.println(e);
 			return null;
 		}
 		

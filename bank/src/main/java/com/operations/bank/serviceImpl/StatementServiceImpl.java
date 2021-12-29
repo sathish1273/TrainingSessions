@@ -1,6 +1,6 @@
 package com.operations.bank.serviceImpl;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class StatementServiceImpl implements StatementService{
 	TransactionsRepository transactionsRepository;
 
 	@Override
-	public Response getTransactions(LocalDate startDate,LocalDate endDate,long accountNumber) {
+	public Response getTransactions(LocalDateTime startDate,LocalDateTime endDate,long accountNumber) {
 		
 		Response response=new Response();
 		List<BusinessMessage> list= new ArrayList<>();
