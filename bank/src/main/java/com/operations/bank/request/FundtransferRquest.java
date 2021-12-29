@@ -1,11 +1,15 @@
 package com.operations.bank.request;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FundtransferRquest {
 	
+	@NotNull(message = "FromAccount should not be empty")
 	private long fromAccount;
+	@NotNull(message = "ToAccount should not be empty")
 	private long toAccount;
 	private double amount;
 	private String comments;

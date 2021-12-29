@@ -18,8 +18,6 @@ import com.operations.bank.repository.AccountRepository;
 import com.operations.bank.request.FundtransferRquest;
 import com.operations.bank.request.UserRequest;
 
-import antlr.StringUtils;
-
 @Component
 public class RequestValidator {
 	
@@ -46,18 +44,10 @@ public class RequestValidator {
 	public static List<BusinessMessage> validateRequest(UserRequest request)
 	{
 		List<BusinessMessage> list=new ArrayList<>();
-		if(Objects.isNull(request))
-			list.add(new BusinessMessage(BusinessValidationMessageConstants.REQUEST_NOTNULL));
-		if(Objects.isNull(request.getFname()) || request.getFname().isEmpty() || request.getFname().isBlank())
-			list.add(new BusinessMessage(BusinessValidationMessageConstants.FIRST_NOTNULL));
-		if(Objects.isNull(request.getLname()) || request.getLname().isEmpty() || request.getLname().isBlank())
-			list.add(new BusinessMessage(BusinessValidationMessageConstants.LAST_NOTNULL));
-		if(Objects.isNull(request.getAge()) || request.getAge() < age )
+		if(request.getAge() < age )
 			list.add(new BusinessMessage(BusinessValidationMessageConstants.AGE_GREATERTHAN_EIGHTEEN));
-		if(Objects.isNull(request.getPhoneNo()) || !isValidMobileNo(String.valueOf(request.getPhoneNo())))
+		if(!isValidMobileNo(String.valueOf(request.getPhoneNo())))
 			list.add(new BusinessMessage(BusinessValidationMessageConstants.MOBILENO_INVALID));
-		if(Objects.isNull(request.getEmail()) || !isValidEmail(request.getEmail()))
-			list.add(new BusinessMessage(BusinessValidationMessageConstants.EMAIL_INVALID));
 		
 		return list;
 	}
@@ -88,7 +78,7 @@ public class RequestValidator {
 			year=year.trim();
 			String month=null;
 			LocalDate today = null;
-			if(monthh != null && monthh.length()>2) {
+			if(!Objects.isNull(monthh) && monthh.length()>2) {
 			Map<String,String> maplist= getMonthNo();
 			for(Map.Entry<String,String> entry : maplist.entrySet())
 			{

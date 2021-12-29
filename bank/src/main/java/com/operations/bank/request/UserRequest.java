@@ -1,15 +1,30 @@
 package com.operations.bank.request;
 
+import javax.persistence.Column;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Range;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserRequest {
 	
+	@NotEmpty(message="first name should not be empty or null")
 	private String fname;
+	@NotEmpty
 	private String lname;
+	@NotNull(message = "Age should not be empty")
 	private int age;
+	@Column
 	private long uID;
+	@NotNull(message = "Please enter phoneNo.")
 	private long phoneNo;
+	@NotEmpty(message = "Email should be not be empty")
+	@Email
 	private String email;
 	private String accountType;
 	

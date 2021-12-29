@@ -10,6 +10,7 @@ import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.operations.bank.constants.BusinessValidationMessageConstants;
 import com.operations.bank.dto.BusinessMessage;
@@ -23,6 +24,7 @@ import com.operations.bank.response.Response;
 import com.operations.bank.service.RegistrationService;
 
 @Service
+@Transactional
 public class RegistrationServiceImpl implements RegistrationService {
 	
 	@Autowired

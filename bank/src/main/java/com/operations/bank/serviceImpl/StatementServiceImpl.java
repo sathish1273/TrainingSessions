@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.operations.bank.constants.BusinessValidationMessageConstants;
 import com.operations.bank.dto.BusinessMessage;
@@ -16,6 +17,7 @@ import com.operations.bank.response.Response;
 import com.operations.bank.service.StatementService;
 
 @Service
+@Transactional
 public class StatementServiceImpl implements StatementService{
 	
 	@Autowired
@@ -25,7 +27,7 @@ public class StatementServiceImpl implements StatementService{
 	public Response getTransactions(LocalDate startDate,LocalDate endDate,long accountNumber) {
 		
 		Response response=new Response();
-		List<BusinessMessage> list= new ArrayList<BusinessMessage>();
+		List<BusinessMessage> list= new ArrayList<>();
 		List<Transactions> transactionsList=transactionsRepository.findByFromAccountOrToAccountAndDateBetween(accountNumber,accountNumber,startDate, endDate);
 		if(!transactionsList.isEmpty()) {
 		list.add(new BusinessMessage(BusinessValidationMessageConstants.TRANSACTIONS_FETCHED));

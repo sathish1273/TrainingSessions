@@ -4,10 +4,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.operations.bank.constants.BusinessValidationMessageConstants;
 import com.operations.bank.dto.BusinessMessage;
@@ -21,6 +23,7 @@ import com.operations.bank.response.Response;
 import com.operations.bank.service.FundTransferService;
 
 @Service
+@Transactional
 public class FundTransferServiceImpl implements FundTransferService {
 	
 	@Autowired
@@ -35,7 +38,7 @@ public class FundTransferServiceImpl implements FundTransferService {
 		List<BusinessMessage> list=new ArrayList<>();
 		Account toAccount=getAccount(request.getToAccount());
 		Account fromAccount=getAccount(request.getFromAccount());
-		if(toAccount != null && fromAccount != null) {		
+		if(!Objects.isNull(toAccount) && !Objects.isNull(fromAccount)) {		
 			if(fromAccount.getAvailableBal() <= 0 || fromAccount.getAvailableBal() < request.getAmount()) {
 				list.add(new BusinessMessage(BusinessValidationMessageConstants.INSUFFIECIENT_FUNDS));
 				response.setStatus(StatusEnum.FAIL);
@@ -48,7 +51,7 @@ public class FundTransferServiceImpl implements FundTransferService {
 			accountRepository.save(fromAccount);
 			Transactions t=new Transactions(request.getFromAccount(), request.getToAccount(), request.getAmount(), request.getComments(), LocalDate.now(),LocalTime.now());
 			Transactions transaction=transactionsRepository.save(t);
-			if(transaction != null)
+			if(!Objects.isNull(transaction))
 			{
 				list.add(new BusinessMessage(BusinessValidationMessageConstants.FUNDS_TRANSFER_SUCCESS));
 				response.setStatus(StatusEnum.SUCCESS);

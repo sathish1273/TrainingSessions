@@ -2,9 +2,12 @@ package com.operations.bank.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +21,7 @@ import com.operations.bank.response.Response;
 import com.operations.bank.service.RegistrationService;
 
 @RestController
+@Validated
 public class RegistrationController {
 	
 	@Autowired
@@ -30,7 +34,7 @@ public class RegistrationController {
 	}
 	
 	@PostMapping("/addUser")
-	public ResponseEntity<Response> addUser(@RequestBody UserRequest userRequest)
+	public ResponseEntity<Response> addUser(@Valid @RequestBody UserRequest userRequest)
 	{
 		Response response=new Response();
 		HttpStatus httpstatus=null;
