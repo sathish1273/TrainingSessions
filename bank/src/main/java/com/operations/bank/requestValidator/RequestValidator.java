@@ -96,7 +96,6 @@ public class RequestValidator {
 			}
 			return today;
 		} catch (Exception e) {
-			System.out.println(e);
 			return null;
 		}
 		

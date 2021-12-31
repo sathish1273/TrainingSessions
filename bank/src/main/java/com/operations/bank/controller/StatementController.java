@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +34,10 @@ public class StatementController {
 	public static final String endDate="endDate";
 	
 	@GetMapping("/statement")
-	public ResponseEntity<Response> fundTransfer(@RequestParam long accountNumber,@RequestParam String month,@RequestParam String year)
+	public ResponseEntity<Response> fundTransfer(@Valid @RequestParam long accountNumber,@Valid @RequestParam String month,@Valid @RequestParam String year)
 	{
 		Response response=new Response();
-		HttpStatus httpstatus=null;
+		HttpStatus httpstatus=HttpStatus.OK;
 		List<BusinessMessage> businessMessage=new ArrayList<>();
 		LocalDate starDate= RequestValidator.getDate(month,year,startDate);
 		LocalDate lastDate= RequestValidator.getDate(month,year,endDate);
@@ -47,7 +49,8 @@ public class StatementController {
 		}
 		else {
 			response=statementService.getTransactions(starDate.atStartOfDay(),lastDate.atStartOfDay(),accountNumber);
-			httpstatus=HttpStatus.OK;
+			if(response.getStatus().equals(StatusEnum.FAIL))
+			httpstatus=HttpStatus.NOT_FOUND;
 		}
 		return new ResponseEntity<>(response,httpstatus);
 	}

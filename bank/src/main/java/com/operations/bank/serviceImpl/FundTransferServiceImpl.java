@@ -1,8 +1,6 @@
 package com.operations.bank.serviceImpl;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,8 +18,10 @@ import com.operations.bank.enity.Transactions;
 import com.operations.bank.repository.AccountRepository;
 import com.operations.bank.repository.TransactionsRepository;
 import com.operations.bank.request.FundtransferRquest;
+import com.operations.bank.requestValidator.RequestValidator;
 import com.operations.bank.response.Response;
 import com.operations.bank.service.FundTransferService;
+import com.operations.utility.Utility;
 
 @Service
 @Transactional
@@ -33,18 +33,24 @@ public class FundTransferServiceImpl implements FundTransferService {
 	@Autowired
 	AccountRepository accountRepository;
 	
+	@Autowired
+	RequestValidator requestValidator;
+	
+	@Autowired
+	Utility utility;
+	
 	@Override
 	public Response fundtransfer(FundtransferRquest request) {
 		Response response=new Response();
 		List<BusinessMessage> list=new ArrayList<>();
-		Account toAccount=getAccount(request.getToAccount());
+		Account toAccount=utility.getAccount(request.getToAccount());
 		if(Objects.isNull(toAccount)) {
 			list.add(new BusinessMessage(BusinessValidationMessageConstants.INVALID_TO_ACCOUNT));
 			response.setStatus(StatusEnum.FAIL);
 			response.setBusinessMessage(list);
 			return response;
 		}
-		Account fromAccount=getAccount(request.getFromAccount());
+		Account fromAccount=utility.getAccount(request.getFromAccount());
 		if(!Objects.isNull(toAccount) && !Objects.isNull(fromAccount)) {		
 			if(fromAccount.getAvailableBal() <= 0 || fromAccount.getAvailableBal() < request.getAmount()) {
 				list.add(new BusinessMessage(BusinessValidationMessageConstants.INSUFFIECIENT_FUNDS));
@@ -82,14 +88,4 @@ public class FundTransferServiceImpl implements FundTransferService {
 		else
 		   return false;
 	}
-	
-	public Account getAccount(long accountNo)
-	{
-		Optional<Account> account=accountRepository.findByAccountNo(accountNo);
-		if(account.isPresent())
-		   return account.get();
-		else
-		   return null;
-	}
-
 }
