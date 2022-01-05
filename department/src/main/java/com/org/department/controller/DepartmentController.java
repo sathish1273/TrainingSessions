@@ -24,7 +24,7 @@ public class DepartmentController {
 	@Autowired
 	DepartmentService departmentService;
 	
-	@GetMapping("/portNumber")
+	@GetMapping("/port")
 	public String getPortNo()
 	{
 		return departmentService.getPortNo();
