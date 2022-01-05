@@ -7,9 +7,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.org.department.config.FeignInterafce;
 import com.org.department.dto.EmployeeDto;
@@ -79,6 +82,36 @@ public class DepartmentServiceImpl implements DepartmentService{
 		departmentOrdersResponse.setResponse(response);	
 		return departmentOrdersResponse;
 	
+	}
+
+	@Override
+	public DepartmentOrdersResponse deleteDepartmetAndEmployees(long departmentId) {
+		
+		DepartmentOrdersResponse departmentOrdersResponse=new DepartmentOrdersResponse();
+		Map<String,List<EmployeeDto>> response=new HashMap<String, List<EmployeeDto>>();
+		List<EmployeeDto> employeDtoList=new ArrayList<EmployeeDto>();
+		Optional<Department> department=departmentRepository.findById(departmentId);
+		if(department.isPresent()) {
+			ResponseEntity<List<EmployeeDto>> responseEntity=feignInterafce.getEmployeesByDepartment(departmentId);
+			employeDtoList.addAll(responseEntity.getBody());
+			response.put(department.get().getDepartmentName(), employeDtoList);
+		}
+		departmentOrdersResponse.setResponse(response);	
+		return departmentOrdersResponse;
+	}
+
+	@Override
+	public DepartmentOrdersResponse deleteDepartmetAndEmployee(long departmentId, long employeeId) {
+		ResponseEntity<Boolean> response= feignInterafce.deleteEmployee(departmentId, employeeId);
+		DepartmentOrdersResponse departmentOrdersResponse=new DepartmentOrdersResponse();
+		if(response.getBody().equals(true))
+		departmentOrdersResponse.setMessage("Success");
+		return departmentOrdersResponse;
+	}
+
+	@Override
+	public String getPortNo() {
+		return feignInterafce.getPortNo();
 	}
 
 }

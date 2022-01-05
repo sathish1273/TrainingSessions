@@ -11,5 +11,8 @@ public interface EmployeeService {
 	public List<Employee> getEmployee();
 	public List<Employee> getEmployeesByDepartment(long id);
 	public Employee addEmployee(EmployeeRequest employeeRequest);
+	public Employee updateEmployee(long id, EmployeeRequest employeeRequest);
+	public boolean deleteEmployee(long departmentId,long employeeId);
+	public boolean deleteAllEmployees(long departmentId);
 
 }

@@ -8,7 +8,8 @@ import com.org.department.dto.EmployeeDto;
 
 public class DepartmentOrdersResponse {
 	
-	Map<String,List<EmployeeDto>> response=new HashMap<String, List<EmployeeDto>>();
+	private String message;
+	private Map<String,List<EmployeeDto>> response=new HashMap<String, List<EmployeeDto>>();
 
 	public Map<String, List<EmployeeDto>> getResponse() {
 		return response;
@@ -16,6 +17,14 @@ public class DepartmentOrdersResponse {
 
 	public void setResponse(Map<String, List<EmployeeDto>> response) {
 		this.response = response;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 	

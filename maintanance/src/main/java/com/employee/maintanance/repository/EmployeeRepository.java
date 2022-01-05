@@ -11,4 +11,5 @@ import com.employee.maintanance.entity.Employee;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
  
 	public List<Employee> findByDepartmentId(long id);
+	public Employee findByIdAndDepartmentId(long departmentId,long employeeId);
 }

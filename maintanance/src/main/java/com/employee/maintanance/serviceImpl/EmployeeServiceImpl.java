@@ -1,6 +1,7 @@
 package com.employee.maintanance.serviceImpl;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<Employee> getEmployeesByDepartment(long id) {
-		List<Employee> employees=employeeRepository.findByDepartmentId(id);
+	public List<Employee> getEmployeesByDepartment(long departmentId) {
+		List<Employee> employees=employeeRepository.findByDepartmentId(departmentId);
 		    return employees;
 	}
 
@@ -44,6 +45,46 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<Employee> employee=employeeRepository.findAll();
 		    return employee;
 	
+	}
+
+	@Override
+	public Employee updateEmployee(long departmentId, EmployeeRequest employeeRequest) {
+		Employee employee=employeeRepository.findByIdAndDepartmentId(departmentId, employeeRequest.getId());
+		if(!Objects.isNull(employee)) {
+			employee.setAge(employeeRequest.getAge());
+			employee.setDepartmentId(employeeRequest.getDepartmentId());
+			employee.setName(employeeRequest.getName());
+			employee=employeeRepository.save(employee);
+			return employee;
+		}
+		else {
+		return null;
+		}
+	}
+
+	@Override
+	public boolean deleteEmployee(long departmentId,long employeeId) {
+		Employee employee=employeeRepository.findByIdAndDepartmentId(departmentId, employeeId);
+		employeeRepository.delete(employee);	
+		if(!Objects.isNull(employee) && Objects.isNull(getEmployee(employee.getId())))
+		   return true;
+		else
+			return false;
+	}
+
+	@Override
+	public boolean deleteAllEmployees(long departmentId) {
+		List<Employee> employees=getEmployeesByDepartment(departmentId);
+		if(employees.size()>0) {
+		employees.stream().forEach(employee->{
+			deleteEmployee(employee.getDepartmentId(), employee.getId());
+		});
+		return true;
+		}
+		else {
+			return false;
+		}
+		
 	}
 
 }
