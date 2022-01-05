@@ -30,7 +30,7 @@ public class DepartmentController {
 		return departmentService.getPortNo();
 	}
 	
-	@GetMapping("/department")
+	@GetMapping("/departments")
 	public ResponseEntity<DepartmentOrdersResponse> getDepartmentEmployees()
 	{
 		DepartmentOrdersResponse response=departmentService.getAllDepartmentAndEmployees();

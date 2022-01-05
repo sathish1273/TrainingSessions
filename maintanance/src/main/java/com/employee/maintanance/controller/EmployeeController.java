@@ -30,7 +30,7 @@ public class EmployeeController {
 	@Autowired
 	Environment environment;
 	
-    @GetMapping
+    @GetMapping("/port")
 	public String getPortNo()
 	{
 		return "Maintanance service port number:  "+environment.getProperty("local.server.port");

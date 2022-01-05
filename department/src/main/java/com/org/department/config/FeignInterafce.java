@@ -19,7 +19,7 @@ import com.org.department.dto.EmployeeDto;
 @FeignClient(name="http://maintanance-service/maintanance")
 public interface FeignInterafce {
 	
-	@GetMapping
+    @GetMapping("/port")
 	public String getPortNo();
 	
 	@PostMapping("/addEmployee")
