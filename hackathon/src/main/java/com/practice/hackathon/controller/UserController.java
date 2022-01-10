@@ -31,7 +31,7 @@ public class UserController {
 	{
 		HttpStatus httpstatus=null;
 		Response response= userService.addUser(userRequest);
-		if(!response.getBusinessMessage().isEmpty()) {
+		if(!Objects.isNull(response) && !response.getStatus().equals(StatusEnum.SUCCESS)) {
 			httpstatus=HttpStatus.NOT_FOUND;
 		}
 		else {

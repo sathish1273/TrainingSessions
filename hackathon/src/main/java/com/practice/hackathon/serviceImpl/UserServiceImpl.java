@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 				if(!Objects.isNull(user)){
 					BusinessMessageList.add(new BusinessMessage("Successfully inserted."));
 					response.setBusinessMessage(BusinessMessageList);
-					response.setStatus(StatusEnum.SUCCESS);
+					response.setStatus(StatusEnum.SUCCESS.toString());
 					response.setResponse(new UserResponse(user.getUserId()));
 					return response;
 				}
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 		}
 		else {
 			response.setBusinessMessage(BusinessMessageList);
-			response.setStatus(StatusEnum.FAIL);
+			response.setStatus(StatusEnum.FAIL.toString());
 			return response;
 		}
 		return response;
@@ -87,11 +87,11 @@ public class UserServiceImpl implements UserService {
 		Optional<User> user=userRepository.findByUserId(userId);
 		if(user.isPresent())
 		{
-			response.setStatus(StatusEnum.SUCCESS);
+			response.setStatus(StatusEnum.SUCCESS.toString());
 			response.setResponse(user.get());
 		}
 		else {
-			response.setStatus(StatusEnum.FAIL);
+			response.setStatus(StatusEnum.FAIL.toString());
 		}
 		return response;
 	}
