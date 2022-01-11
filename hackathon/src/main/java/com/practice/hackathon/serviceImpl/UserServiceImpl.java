@@ -36,27 +36,27 @@ public class UserServiceImpl implements UserService {
 		List<BusinessMessage> BusinessMessageList= validateRequest(userRequest);
 		if(BusinessMessageList.isEmpty())
 		{
-//			User userCheck=getUserByIdentificationId(userRequest.getIdentification_id());
-//			if(!Objects.isNull(userCheck))
-//			{
-//				BusinessMessageList.add(new BusinessMessage("user already existed"));
-//				response.setBusinessMessage(BusinessMessageList);
-//				response.setStatus(StatusEnum.FAIL);
-//				return response;
-//			}
+			User userCheck=getUserByIdentificationId(userRequest.getIdentification_id());
+			if(!Objects.isNull(userCheck))
+			{
+				BusinessMessageList.add(new BusinessMessage("user already existed"));
+				response.setBusinessMessage(BusinessMessageList);
+				response.setApiStatus(StatusEnum.FAIL);
+				return response;
+			}
 			Address address=new Address(userRequest.getAddress().getHomeNumber(), userRequest.getAddress().getBuildingNumber(), userRequest.getAddress().getStreetName(), 
 					userRequest.getAddress().getLandMarks(), userRequest.getAddress().getCity(), userRequest.getAddress().getState(), userRequest.getAddress().getPincode());
 			address=addressRepository.save(address);
 			if(!Objects.isNull(address))
 			{
 				User user=new User(userRequest.getFirstName(), userRequest.getLastName(), userRequest.getDateOfBirth(), userRequest.getNatinality(), userRequest.getGender(),
-						userRequest.getPrimary_contact_number(), userRequest.getSecondary_contact_number(), userRequest.getIdentification_id(), null, userRequest.getEmail(), address.getAddress_id());
+						userRequest.getPrimary_contact_number(), userRequest.getSecondary_contact_number(), userRequest.getIdentification_id(), null, userRequest.getEmail(), address);
 				user=userRepository.save(user);
 				if(!Objects.isNull(user)){
 					BusinessMessageList.add(new BusinessMessage("Successfully inserted."));
 					response.setBusinessMessage(BusinessMessageList);
-					response.setStatus(StatusEnum.SUCCESS.toString());
-					response.setResponse(new UserResponse(user.getUserId()));
+					response.setApiStatus(StatusEnum.SUCCESS);
+					response.setResponseData(new UserResponse(user.getUserId()));
 					return response;
 				}
 			}
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 		}
 		else {
 			response.setBusinessMessage(BusinessMessageList);
-			response.setStatus(StatusEnum.FAIL.toString());
+			response.setApiStatus(StatusEnum.FAIL);
 			return response;
 		}
 		return response;
@@ -87,11 +87,11 @@ public class UserServiceImpl implements UserService {
 		Optional<User> user=userRepository.findByUserId(userId);
 		if(user.isPresent())
 		{
-			response.setStatus(StatusEnum.SUCCESS.toString());
-			response.setResponse(user.get());
+			response.setApiStatus(StatusEnum.SUCCESS);
+			response.setResponseData(user.get());
 		}
 		else {
-			response.setStatus(StatusEnum.FAIL.toString());
+			response.setApiStatus(StatusEnum.FAIL);
 		}
 		return response;
 	}

@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class Address {
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	private long address_id;
+	private long addressId;
 	private String homeNumber;
 	private String buildingNumber;
 	private String streetName;
@@ -18,12 +18,11 @@ public class Address {
 	private String state;
 	private int pincode;
 	
-	
-	public long getAddress_id() {
-		return address_id;
+	public long getAddresId() {
+		return addressId;
 	}
-	public void setAddress_id(long address_id) {
-		this.address_id = address_id;
+	public void setAddresId(long addressId) {
+		this.addressId = addressId;
 	}
 	public String getHomeNumber() {
 		return homeNumber;

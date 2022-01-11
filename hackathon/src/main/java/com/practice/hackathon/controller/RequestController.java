@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.practice.hackathon.dto.RequestStatus;
 import com.practice.hackathon.dto.StatusEnum;
 import com.practice.hackathon.request.RequestData;
 import com.practice.hackathon.response.Response;
@@ -28,7 +27,7 @@ public class RequestController {
 	{
 		HttpStatus httpstatus=null;
 		Response response= requestService.addrequest(requestData);
-		if(!Objects.isNull(response) && !response.getStatus().equals(RequestStatus.INPROGRESS)) {
+		if(!Objects.isNull(response) && !response.getApiStatus().equals(StatusEnum.SUCCESS)) {
 			httpstatus=HttpStatus.NOT_FOUND;
 		}
 		else {

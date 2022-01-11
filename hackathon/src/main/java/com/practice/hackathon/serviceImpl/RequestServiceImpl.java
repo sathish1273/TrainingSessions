@@ -16,6 +16,7 @@ import com.practice.hackathon.entity.User;
 import com.practice.hackathon.repository.RequestRepository;
 import com.practice.hackathon.repository.UserRepository;
 import com.practice.hackathon.request.RequestData;
+import com.practice.hackathon.response.RequestResponse;
 import com.practice.hackathon.response.Response;
 import com.practice.hackathon.response.UserResponse;
 import com.practice.hackathon.service.RequestService;
@@ -41,17 +42,18 @@ public class RequestServiceImpl implements RequestService {
 			{
 				BusinessMessageList.add(new BusinessMessage("Request has been submitted successfully."));
 				response.setBusinessMessage(BusinessMessageList);
-				response.setStatus(RequestStatus.INPROGRESS.toString());
-				response.setResponse(new UserResponse(request.getRequestId()));
+				response.setApiStatus(StatusEnum.SUCCESS);
+				response.setResponseData(new RequestResponse(RequestStatus.INPROGRESS, request.getRequestId()));
 				return response;
 			}
 			else {
-				BusinessMessageList.add(new BusinessMessage("Request has been submitted successfully."));
+				BusinessMessageList.add(new BusinessMessage("Problem with the request"));
 				response.setBusinessMessage(BusinessMessageList);
-				response.setStatus(StatusEnum.FAIL.toString());
-				response.setResponse(new UserResponse(request.getRequestId()));
+				response.setApiStatus(StatusEnum.FAIL);
 			}
 		}
+		response.setBusinessMessage(BusinessMessageList);
+		response.setApiStatus(StatusEnum.FAIL);
 		return response;
 	}
 	
@@ -60,7 +62,7 @@ public class RequestServiceImpl implements RequestService {
 		Optional<User> user=userRepository.findByIdentificationId(requestData.getUserIdentificationId());
 		if(user.isPresent())
 		{
-			return null;
+			return BusinessMessageList;
 		}
 		BusinessMessageList.add(new BusinessMessage("User not existed with UserIdentificationId"));
 		return BusinessMessageList;

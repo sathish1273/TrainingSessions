@@ -1,9 +1,12 @@
 package com.practice.hackathon.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class User {
@@ -21,7 +24,9 @@ public class User {
 	private long identificationId;
 	private byte[] identification_proof;
 	private String email;
-	private long address;
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "addressId", insertable = true, updatable = true)
+	private Address address;
 
 	
 
@@ -117,17 +122,27 @@ public class User {
 		this.identification_proof = identification_proof;
 	}
 
-	public long getAddress() {
+	
+
+	public long getIdentificationId() {
+		return identificationId;
+	}
+
+	public void setIdentificationId(long identificationId) {
+		this.identificationId = identificationId;
+	}
+
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(long address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 
 	public User(String firstName, String lastName, String dateOfBirth, String natinality, String gender,
 			long primary_contact_number, long secondary_contact_number, long identification_id,
-			byte[] identification_proof, String email, long address) {
+			byte[] identification_proof, String email, Address address) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;

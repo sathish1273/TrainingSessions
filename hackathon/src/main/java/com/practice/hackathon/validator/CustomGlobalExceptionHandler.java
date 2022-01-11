@@ -33,7 +33,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         			list.add(new BusinessMessage(fieldname+" : "+message));
         		});
         if(!list.isEmpty()) {
-			response.setStatus(StatusEnum.FAIL.toString());
+			response.setApiStatus(StatusEnum.FAIL);
 			response.setBusinessMessage(list);
 		}
 

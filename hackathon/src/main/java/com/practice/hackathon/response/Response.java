@@ -7,7 +7,7 @@ import com.practice.hackathon.dto.StatusEnum;
 
 public class Response {
 	
-	private String status;
+	private StatusEnum apiStatus;
 	private List<BusinessMessage> businessMessage;	
 	private Object responseData;
 	public List<BusinessMessage> getBusinessMessage() {
@@ -16,17 +16,18 @@ public class Response {
 	public void setBusinessMessage(List<BusinessMessage> businessMessage) {
 		this.businessMessage = businessMessage;
 	}
-	public String getStatus() {
-		return status;
+	
+	public StatusEnum getApiStatus() {
+		return apiStatus;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public void setApiStatus(StatusEnum apiStatus) {
+		this.apiStatus = apiStatus;
 	}
-	public Object getResponse() {
+	public Object getResponseData() {
 		return responseData;
 	}
-	public void setResponse(Object response) {
-		this.responseData = response;
+	public void setResponseData(Object responseData) {
+		this.responseData = responseData;
 	}
 	
 	

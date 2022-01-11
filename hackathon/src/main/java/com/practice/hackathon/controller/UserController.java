@@ -31,7 +31,7 @@ public class UserController {
 	{
 		HttpStatus httpstatus=null;
 		Response response= userService.addUser(userRequest);
-		if(!Objects.isNull(response) && !response.getStatus().equals(StatusEnum.SUCCESS)) {
+		if(!Objects.isNull(response) && !response.getApiStatus().equals(StatusEnum.SUCCESS)) {
 			httpstatus=HttpStatus.NOT_FOUND;
 		}
 		else {
@@ -45,7 +45,7 @@ public class UserController {
 	{
 		HttpStatus httpstatus=null;
 		Response response= userService.getUser(userId);
-		if(!Objects.isNull(response) && !response.getStatus().equals(StatusEnum.SUCCESS)) {
+		if(!Objects.isNull(response) && !response.getApiStatus().equals(StatusEnum.SUCCESS)) {
 			httpstatus=HttpStatus.NOT_FOUND;
 		}
 		else {
