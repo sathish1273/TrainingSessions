@@ -10,7 +10,7 @@ public class RequestData {
 	@NotNull(message = "PlanId should be not be empty")
 	private long planId;
 	@NotNull(message = "UserIdentificationId should be not be empty")
-	private long userIdentificationId;
+	private long userId;
 	@NotNull(message = "MobileNumber should be not be empty")
 	private long mobileNumber;
 	@NotEmpty(message = "RequestStatus should be not be empty")
@@ -22,11 +22,12 @@ public class RequestData {
 	public void setPlanId(long planId) {
 		this.planId = planId;
 	}
-	public long getUserIdentificationId() {
-		return userIdentificationId;
+	
+	public long getUserId() {
+		return userId;
 	}
-	public void setUserIdentificationId(long userIdentificationId) {
-		this.userIdentificationId = userIdentificationId;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 	public long getMobileNumber() {
 		return mobileNumber;

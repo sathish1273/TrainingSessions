@@ -18,7 +18,6 @@ import com.practice.hackathon.repository.UserRepository;
 import com.practice.hackathon.request.RequestData;
 import com.practice.hackathon.response.RequestResponse;
 import com.practice.hackathon.response.Response;
-import com.practice.hackathon.response.UserResponse;
 import com.practice.hackathon.service.RequestService;
 
 @Service
@@ -36,7 +35,7 @@ public class RequestServiceImpl implements RequestService {
 		List<BusinessMessage> BusinessMessageList= validateRequest(requestData);
 		if(BusinessMessageList.isEmpty())
 		{
-			Request request=new Request(requestData.getPlanId(), requestData.getUserIdentificationId(), requestData.getMobileNumber(), RequestStatus.INPROGRESS.toString(), null);
+			Request request=new Request(requestData.getPlanId(), requestData.getUserId(), requestData.getMobileNumber(), RequestStatus.INPROGRESS.toString(), null);
 			request=requestRepository.save(request);
 			if(!Objects.isNull(request))
 			{
@@ -59,7 +58,13 @@ public class RequestServiceImpl implements RequestService {
 	
 	private List<BusinessMessage> validateRequest(RequestData requestData) {
 		List<BusinessMessage> BusinessMessageList=new ArrayList<BusinessMessage>();
-		Optional<User> user=userRepository.findByIdentificationId(requestData.getUserIdentificationId());
+		Request request=requestRepository.findByUserId(requestData.getUserId());
+		if(!Objects.isNull(request))
+		{
+			BusinessMessageList.add(new BusinessMessage("Request is already existed."));
+			return BusinessMessageList;
+		}
+		Optional<User> user=userRepository.findByUserId(requestData.getUserId());
 		if(user.isPresent())
 		{
 			return BusinessMessageList;

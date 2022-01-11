@@ -1,5 +1,6 @@
 package com.practice.hackathon.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,6 @@ import com.practice.hackathon.entity.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 	
 	Optional<User> findByUserId(long userId);
-	Optional<User> findByIdentificationId(long identifictaionId);
+	List<User> findByIdentificationId(long identifictaionId);
 
 }

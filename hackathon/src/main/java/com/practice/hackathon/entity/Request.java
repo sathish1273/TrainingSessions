@@ -11,7 +11,7 @@ public class Request {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private long requestId;
 	private long planId;
-	private long userIdentificationId;
+	private long userId;
 	private long mobileNumber;
 	private String requestStatus;
 	private String comments;
@@ -27,11 +27,12 @@ public class Request {
 	public void setPlanId(long planId) {
 		this.planId = planId;
 	}
-	public long getUserIdentificationId() {
-		return userIdentificationId;
+	
+	public long getUserId() {
+		return userId;
 	}
-	public void setUserIdentificationId(long userIdentificationId) {
-		this.userIdentificationId = userIdentificationId;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 	public long getMobileNumber() {
 		return mobileNumber;
@@ -51,15 +52,17 @@ public class Request {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	public Request(long planId, long userIdentificationId, long mobileNumber, String requestStatus,
+	public Request(long planId, long userId, long mobileNumber, String requestStatus,
 			String comments) {
 		super();
 		this.planId = planId;
-		this.userIdentificationId = userIdentificationId;
+		this.userId = userId;
 		this.mobileNumber = mobileNumber;
 		this.requestStatus = requestStatus;
 		this.comments = comments;
 	}
 	
-	
+	public Request() {
+		
+	}
 }

@@ -36,14 +36,14 @@ public class UserServiceImpl implements UserService {
 		List<BusinessMessage> BusinessMessageList= validateRequest(userRequest);
 		if(BusinessMessageList.isEmpty())
 		{
-			User userCheck=getUserByIdentificationId(userRequest.getIdentification_id());
-			if(!Objects.isNull(userCheck))
-			{
-				BusinessMessageList.add(new BusinessMessage("user already existed"));
-				response.setBusinessMessage(BusinessMessageList);
-				response.setApiStatus(StatusEnum.FAIL);
-				return response;
-			}
+//			User userCheck=getUserByIdentificationId(userRequest.getIdentification_id());
+//			if(!Objects.isNull(userCheck))
+//			{
+//				BusinessMessageList.add(new BusinessMessage("user already existed"));
+//				response.setBusinessMessage(BusinessMessageList);
+//				response.setApiStatus(StatusEnum.FAIL);
+//				return response;
+//			}
 			Address address=new Address(userRequest.getAddress().getHomeNumber(), userRequest.getAddress().getBuildingNumber(), userRequest.getAddress().getStreetName(), 
 					userRequest.getAddress().getLandMarks(), userRequest.getAddress().getCity(), userRequest.getAddress().getState(), userRequest.getAddress().getPincode());
 			address=addressRepository.save(address);
@@ -97,13 +97,9 @@ public class UserServiceImpl implements UserService {
 	}
 	
 
-	private User getUserByIdentificationId(long IdentificationId) {
-		Optional<User> user=userRepository.findByIdentificationId(IdentificationId);
-		if(user.isPresent())
-		{
-			return user.get();
-		}
-		return null;
+	private List<User> getUserByIdentificationId(long IdentificationId) {
+		List<User> user=userRepository.findByIdentificationId(IdentificationId);
+		return user;
 	}
 	
 	public static boolean isValidMobileNo(String str)  
